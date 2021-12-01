@@ -1,0 +1,24 @@
+---
+- name: Install containerd
+  hosts: all
+  tasks:
+    - name: Install containerd
+      apt:
+        name: containerd
+        state: present
+        update_cache: yes
+    - name: Create /etc/containerd directory
+      file:
+        path: /etc/containerd
+        state: directory
+    - name: Create configure file
+      shell: containerd config default | sudo tee /etc/containerd/config.toml
+    - name: Change configure file
+      lineinfile:
+        path: /etc/containerd/config.toml
+        regexp: sandbox_image
+        line: sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.5"
+    - name: Restart Servcei
+      service:
+        name: containerd
+        state: restarted
