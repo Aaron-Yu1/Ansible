@@ -1,0 +1,17 @@
+---
+# tasks file for java
+- name: Unarchive java package
+  unarchive:
+    src: bin/jdk-{{ JAVA_VERSION }}_linux-x64_bin.tar.gz
+    dest: /usr/local/bin/
+
+- name: Create a symbolic link
+  file:
+    src: /usr/local/bin/jdk-{{ JAVA_VERSION }}
+    dest: /usr/local/bin/jdk
+    state: link
+
+- name: copy profile file
+  copy:
+    src: jdk.sh
+    dest: /etc/profile.d/jdk.sh

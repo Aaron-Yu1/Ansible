@@ -1,0 +1,4 @@
+---
+# handlers file for zookeeper
+- name: apply jdk profile
+  shell: source /etc/profile.d/jdk.sh

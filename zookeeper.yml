@@ -1,0 +1,8 @@
+---
+- name: deployment zookeeper
+  hosts: zookeeper
+  roles:
+    - name: install java
+      role: java
+    - name: deployment zookeeper
+      role: zookeeper

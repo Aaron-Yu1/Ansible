@@ -1,0 +1,51 @@
+---
+# tasks file for zookeeper
+- name: Unarchive java package
+  unarchive:
+    src: bin/jdk-{{ JAVA_VERSION }}_linux-x64_bin.tar.gz
+    dest: /usr/local/bin/
+
+- name: Create a symbolic link
+  file:
+    src: /usr/local/bin/jdk-{{ JAVA_VERSION }}
+    dest: /usr/local/bin/jdk
+    state: link
+
+- name: copy profile file
+  copy: 
+    src: jdk.sh
+    dest: /etc/profile.d/jdk.sh
+
+- name: Unarchive zookeeper package
+  unarchive:
+    src: bin/apache-zookeeper-{{ ZOOKEEPER_VERSION }}-bin.tar.gz
+    dest: /usr/local/bin/
+
+- name: Create a symbolic link
+  file:
+    src: /usr/local/bin/apache-zookeeper-{{ ZOOKEEPER_VERSION }}-bin
+    dest: /usr/local/bin/zookeeper
+    state: link
+
+- name: Create a directory for zookeeper
+  file:
+    path: /zookeeper/data
+    state: directory
+
+- name: template config file
+  template:
+    src: zoo.cfg.j2
+    dest: /usr/local/bin/zookeeper/conf/zoo.cfg
+
+- name: Create myid
+  template:
+    src: myid.j2
+    dest: /zookeeper/data/myid
+
+- name: start nodes
+  shell: bash -c "/usr/local/bin/zookeeper/bin/zkServer.sh start"
+  become: true
+  become_method: su
+  become_user: root
+  become_flags: -l
+

@@ -1,0 +1,16 @@
+[Unit]
+Description=Apache Zookeeper
+Documentation=http://zookeeper.apache.org
+Requires=network.target
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/local/bin/zookeeper/bin/zkServer.sh start
+ExecStop=/usr/local/bin/zookeeper/bin/zkServer.sh stop
+SuccessExitStatus=143
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+Alias=zookeeper.service

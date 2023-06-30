@@ -1,0 +1,3 @@
+---
+# vars file for zookeeper
+ZOOKEEPER_VERSION: 3.8.1
