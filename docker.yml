@@ -1,0 +1,6 @@
+---
+- name: Deployment docker
+  hosts: docker
+  roles:
+    - name: Deployment docker
+      role: docker

@@ -5,3 +5,6 @@ zookeeper
 
 下载zookeeper 安装包到 bin 目录。
 https://zookeeper.apache.org/releases.html
+
+Docker
+下载 Docker 二进制安装包到 bin 目录，并运行playbook docker.yml

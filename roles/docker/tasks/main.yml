@@ -1,0 +1,31 @@
+---
+# tasks file for docker
+- name: upload docker package and unarchive
+  unarchive:
+    src: bin/docker-{{ DOCKER_VERSION }}.tgz
+    dest: /tmp
+
+- name: Copy docker package to /usr/local/bin
+  copy:
+    src: /tmp/docker/
+    dest: /usr/local/bin/
+    remote_src: yes
+
+- name: Copy service file
+  template:
+    src: "{{ item }}.j2"
+    dest: /usr/lib/systemd/system/{{ item }}
+  with_items:
+    - containerd.service
+    - docker.socket
+    - docker.service
+
+- name: start service
+  systemd:
+    name: "{{ item }}"
+    state: started
+    daemon_reload: true
+    enabled: true
+  with_items:
+    - containerd
+    - docker

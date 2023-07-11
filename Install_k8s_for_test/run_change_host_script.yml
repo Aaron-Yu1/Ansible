@@ -1,6 +1,0 @@
----
-- name: Change kernel
-  hosts: all
-  tasks:
-    - name: run script to modprobe
-      script: change_host.sh
