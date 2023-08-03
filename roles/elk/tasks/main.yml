@@ -1,0 +1,30 @@
+---
+# tasks file for elk
+- name: add apt key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    keyring: /usr/share/keyrings/elasticsearch-keyring.gpg
+
+- name: add repository
+  apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/7.x/apt stable main"
+    state: present
+
+- name: install packages
+  apt:
+    name:
+      - elasticsearch
+      - kibana
+      - logstash
+    state: present
+    update_cache: yes
+
+- name: start service
+  service:
+     name: "{{ item }}"
+     state: started
+     enabled: yes
+  with_items:
+    - elasticsearch.service
+    - kibana.service
+    - logstash.service

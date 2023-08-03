@@ -1,0 +1,6 @@
+---
+- name: Deployment ELK Static
+  hosts: elk
+  roles:
+    - name: Deployment ELK Static
+      role: elk
